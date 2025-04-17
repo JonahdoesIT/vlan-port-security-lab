@@ -30,7 +30,7 @@ Aimed at reinforcing network segmentation and switch security fundamentals.
 | PC2    | Unauthorized | N/A      | Fa0/3 → Fa0/1 (attack) |
 | Switch | Core Switch  | -        | Fa0/1–Fa0/3 |
 
-📸 ![topology](https://github.com/user-attachments/assets/18f54419-ab7a-4e19-99c7-6c07c15d7626)
+ ![topology](https://github.com/user-attachments/assets/18f54419-ab7a-4e19-99c7-6c07c15d7626)
 
 
 ---
@@ -66,7 +66,7 @@ interface fa0/1
 
 exit
 
-📸 ![port security configuration](https://github.com/user-attachments/assets/fae46d4c-853e-47e7-9149-635fc1ac9c96)
+ ![port security configuration](https://github.com/user-attachments/assets/fae46d4c-853e-47e7-9149-635fc1ac9c96)
 
 In this step, we secured the switch ports by enabling port security and configuring them to allow only one device per port. We used the "sticky MAC" feature so the switch could automatically learn the MAC address of the connected device and lock it in. We set the violation mode to "restrict", which blocks unauthorized devices while keeping the port active and logging the violation.
 
@@ -78,11 +78,11 @@ In this step, we secured the switch ports by enabling port security and configur
   - PC1: `192.168.20.10`
 - Attempt ping between VLANs (will fail)
 
-📸 ![PC0-IP config](https://github.com/user-attachments/assets/47aadf9c-a411-455c-8749-a88acc2ea84e)
+ ![PC0-IP config](https://github.com/user-attachments/assets/47aadf9c-a411-455c-8749-a88acc2ea84e)
 
-📸 ![PC1-IP config](https://github.com/user-attachments/assets/4acb9bbc-9c00-4f26-82db-62f3f82a0576)
+ ![PC1-IP config](https://github.com/user-attachments/assets/4acb9bbc-9c00-4f26-82db-62f3f82a0576)
 
-📸 ![ping test fail](https://github.com/user-attachments/assets/541d2878-1242-424d-ba26-ae9698947f1d)
+ ![ping test fail](https://github.com/user-attachments/assets/541d2878-1242-424d-ba26-ae9698947f1d)
 
 After assigning VLANs and IP addresses to each PC, we attempted to ping from PC0 (VLAN 10) to PC1 (VLAN 20). The ping failed, which is expected. Since there is no inter-VLAN routing configured, traffic between VLANs is blocked by default — confirming that segmentation is working as intended.
 
@@ -99,11 +99,11 @@ show port-security interface fa0/1
 
 Expected: Violation Count > 0
 
-📸 ![disconnect pc0](https://github.com/user-attachments/assets/7d51ab2d-53c2-4d4b-87db-9229e66f56aa)
+ ![disconnect pc0](https://github.com/user-attachments/assets/7d51ab2d-53c2-4d4b-87db-9229e66f56aa)
 
-📸 ![pc2 violation attempt](https://github.com/user-attachments/assets/abb85935-ca79-4ee3-9872-19737e1803ea)
+ ![pc2 violation attempt](https://github.com/user-attachments/assets/abb85935-ca79-4ee3-9872-19737e1803ea)
 
-📸![confirm violation in cli](https://github.com/user-attachments/assets/b8d90849-0028-4c59-9a00-045874f411aa)
+![confirm violation in cli](https://github.com/user-attachments/assets/b8d90849-0028-4c59-9a00-045874f411aa)
 
 To simulate an unauthorized device connecting to the network, we unplugged the authorized device from Fa0/1 and connected PC2 (the attacker) in its place. Since PC2's MAC address didn't match the one learned by the switch, the violation was triggered. The switch responded by blocking the traffic and incrementing the violation count, demonstrating how port security can prevent rogue devices from gaining access.
 
@@ -142,7 +142,8 @@ To simulate an unauthorized device connecting to the network, we unplugged the a
 ```
 
 ---
+## 🧾 Conclusion
 
-## 🧠 Author Notes
-This lab was completed and documented manually by the creator to reinforce practical understanding of network segmentation and switch-level endpoint defense. Built using Cisco Packet Tracer v8.x.
+In this lab, we successfully configured VLANs to segment network traffic and implemented port security to restrict access based on MAC addresses. This setup enhances network security by ensuring that only authorized devices can communicate within designated VLANs.
+
 
