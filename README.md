@@ -43,11 +43,15 @@ Start by creating two VLANs to segment traffic by department:
 
 ![Vlan creationg+port assignment](https://github.com/user-attachments/assets/1db8b41a-8d1a-4743-b281-aaf297787391)
 
-Assign VLAN 10 to port Fa0/1 (HR) and VLAN 20 to port Fa0/2 (IT):
-📘 This configuration ensures that each department’s device is isolated at Layer 2 unless routing is explicitly allowed later.
+### Assign VLAN 10 to port Fa0/1 (HR) and VLAN 20 to port Fa0/2 (IT):
+
+#### 📘 This configuration ensures that each department’s device is isolated at Layer 2 unless routing is explicitly allowed later.
+
+In these steps, we created two VLANs to represent different departments — HR and IT — and assigned them to specific switch ports. VLANs (Virtual Local Area Networks) allow us to segment traffic within a single switch, providing better organization, reduced broadcast traffic, and enhanced security.
+
 ---
 
-### 🛡️ Step 3: Configure Port Security
+### 🛡️ Step 2: Configure Port Security
 The goal here is to limit which devices can connect to specific switch ports by using **port security** with **sticky MAC address learning**.
 
 #### 🔧 Commands Used:
@@ -64,10 +68,11 @@ exit
 
 📸 ![port security configuration](https://github.com/user-attachments/assets/fae46d4c-853e-47e7-9149-635fc1ac9c96)
 
+In this step, we secured the switch ports by enabling port security and configuring them to allow only one device per port. We used the "sticky MAC" feature so the switch could automatically learn the MAC address of the connected device and lock it in. We set the violation mode to "restrict", which blocks unauthorized devices while keeping the port active and logging the violation.
 
 ---
 
-### 🔍 Step 4: Testing VLAN Segmentation
+### 🔍 Step 3: Testing VLAN Segmentation
 - Assign static IPs:
   - PC0: `192.168.10.10`
   - PC1: `192.168.20.10`
@@ -79,9 +84,11 @@ exit
 
 📸 ![ping test fail](https://github.com/user-attachments/assets/541d2878-1242-424d-ba26-ae9698947f1d)
 
+After assigning VLANs and IP addresses to each PC, we attempted to ping from PC0 (VLAN 10) to PC1 (VLAN 20). The ping failed, which is expected. Since there is no inter-VLAN routing configured, traffic between VLANs is blocked by default — confirming that segmentation is working as intended.
+
 ---
 
-### 🔥 Step 5: Simulate Unauthorized Access
+### 🔥 Step 4: Simulate Unauthorized Access
 1. Disconnect PC0 from Fa0/1
 2. Plug PC2 into Fa0/1
 3. Assign PC2 IP: `192.168.10.200`
@@ -97,6 +104,8 @@ Expected: Violation Count > 0
 📸 ![pc2 violation attempt](https://github.com/user-attachments/assets/abb85935-ca79-4ee3-9872-19737e1803ea)
 
 📸![confirm violation in cli](https://github.com/user-attachments/assets/b8d90849-0028-4c59-9a00-045874f411aa)
+
+To simulate an unauthorized device connecting to the network, we unplugged the authorized device from Fa0/1 and connected PC2 (the attacker) in its place. Since PC2's MAC address didn't match the one learned by the switch, the violation was triggered. The switch responded by blocking the traffic and incrementing the violation count, demonstrating how port security can prevent rogue devices from gaining access.
 
 ---
 
