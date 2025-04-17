@@ -27,56 +27,40 @@ Aimed at reinforcing network segmentation and switch security fundamentals.
 | PC2    | Unauthorized | N/A      | Fa0/3 → Fa0/1 (attack) |
 | Switch | Core Switch  | -        | Fa0/1–Fa0/3 |
 
-📸 **Screenshot:** `/screenshots/topology.png`
+📸 ![topology](https://github.com/user-attachments/assets/18f54419-ab7a-4e19-99c7-6c07c15d7626)
+
 
 ---
 
 ## ⚙️ Step-by-Step Configuration
 
-### 🔧 Step 1: VLAN Creation
-enable
-configure terminal
-vlan 10
- name HR
-exit
-vlan 20
- name IT
-exit
+### 🔧 Step 1: VLAN Creation + Assign VLANs to Ports
+Start by creating two VLANs to segment traffic by department:
+📘 VLAN 10 and 20 are now created and labeled for HR and IT. This allows us to separate network traffic within the same switch.
 
-📸 /screenshots/vlan-config.png
+![Vlan creationg+port assignment](https://github.com/user-attachments/assets/1db8b41a-8d1a-4743-b281-aaf297787391)
 
-### 🔧 Step 2: Assign VLANs to Ports
-interface fa0/1
- switchport mode access
- switchport access vlan 10
-exit
-interface fa0/2
- switchport mode access
- switchport access vlan 20
-exit
-
-📸 /screenshots/vlan-port-assignment.png
-
+Assign VLAN 10 to port Fa0/1 (HR) and VLAN 20 to port Fa0/2 (IT):
+📘 This configuration ensures that each department’s device is isolated at Layer 2 unless routing is explicitly allowed later.
 ---
 
 ### 🛡️ Step 3: Configure Port Security
+The goal here is to limit which devices can connect to specific switch ports by using **port security** with **sticky MAC address learning**.
 
+#### 🔧 Commands Used:
 interface fa0/1
  switchport port-security
+ 
  switchport port-security maximum 1
+ 
  switchport port-security violation restrict
+ 
  switchport port-security mac-address sticky
- switchport port-security mac-address [PC0-MAC]
+
 exit
 
-interface fa0/2
- switchport port-security
- switchport port-security maximum 1
- switchport port-security violation restrict
- switchport port-security mac-address sticky
-exit
+📸 ![port security configuration](https://github.com/user-attachments/assets/fae46d4c-853e-47e7-9149-635fc1ac9c96)
 
-📸 /screenshots/port-security/config.png
 
 ---
 
@@ -86,9 +70,11 @@ exit
   - PC1: `192.168.20.10`
 - Attempt ping between VLANs (will fail)
 
-📸 `/screenshots/vlan-segmentation/pc0-ip.png`
-📸 `/screenshots/vlan-segmentation/pc1-ip.png`
-📸 `/screenshots/vlan-segmentation/ping-fail.png`
+📸 ![PC0-IP config](https://github.com/user-attachments/assets/47aadf9c-a411-455c-8749-a88acc2ea84e)
+
+📸 ![PC1-IP config](https://github.com/user-attachments/assets/4acb9bbc-9c00-4f26-82db-62f3f82a0576)
+
+📸 ![ping test fail](https://github.com/user-attachments/assets/541d2878-1242-424d-ba26-ae9698947f1d)
 
 ---
 
@@ -98,13 +84,16 @@ exit
 3. Assign PC2 IP: `192.168.10.200`
 4. Generate traffic (ping, open browser)
 5. Check for violation:
-```bash
+
 show port-security interface fa0/1
-```
+
 Expected: Violation Count > 0
 
-📸 `/screenshots/port-security/pc2-violation.png`
-📸 `/screenshots/port-security/show-result.png`
+📸 ![disconnect pc0](https://github.com/user-attachments/assets/7d51ab2d-53c2-4d4b-87db-9229e66f56aa)
+
+📸 ![pc2 violation attempt](https://github.com/user-attachments/assets/abb85935-ca79-4ee3-9872-19737e1803ea)
+
+📸![confirm violation in cli](https://github.com/user-attachments/assets/b8d90849-0028-4c59-9a00-045874f411aa)
 
 ---
 
