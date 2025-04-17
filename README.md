@@ -1,4 +1,7 @@
+![cisco_packet_tracer](https://github.com/user-attachments/assets/b47e6c0f-9a45-4528-a898-a50349be11d8)
+
 # 🔐 VLAN + Port Security Lab
+
 
 ## 🧠 Overview
 This lab simulates a realistic network security scenario using Cisco Packet Tracer. You will:
