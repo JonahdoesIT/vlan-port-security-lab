@@ -4,7 +4,7 @@
 
 
 ## 🧠 Overview
-This lab simulates a realistic network security scenario using Cisco Packet Tracer. You will:
+This lab simulates a realistic network security scenario using Cisco Packet Tracer. 
 - Configure VLANs to segment departments
 - Apply port security to lock ports to specific MAC addresses
 - Trigger and detect violations when unauthorized devices connect
