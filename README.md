@@ -97,7 +97,7 @@ After assigning VLANs and IP addresses to each PC, we attempted to ping from PC0
 
 show port-security interface fa0/1
 
-Expected: Violation Count > 0
+
 
  ![disconnect pc0](https://github.com/user-attachments/assets/7d51ab2d-53c2-4d4b-87db-9229e66f56aa)
 
