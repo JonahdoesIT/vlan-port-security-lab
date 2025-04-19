@@ -66,7 +66,8 @@ interface fa0/1
 
 exit
 
- ![port security configuration](https://github.com/user-attachments/assets/fae46d4c-853e-47e7-9149-635fc1ac9c96)
+ ![fix 1](https://github.com/user-attachments/assets/bc9239b3-cfc3-4749-a5a7-bc5b4f046f76)
+
 
 In this step, we secured the switch ports by enabling port security and configuring them to allow only one device per port. We used the "sticky MAC" feature so the switch could automatically learn the MAC address of the connected device and lock it in. We set the violation mode to "restrict", which blocks unauthorized devices while keeping the port active and logging the violation.
 
@@ -103,7 +104,10 @@ show port-security interface fa0/1
 
  ![pc2 violation attempt](https://github.com/user-attachments/assets/abb85935-ca79-4ee3-9872-19737e1803ea)
 
-![confirm violation in cli](https://github.com/user-attachments/assets/b8d90849-0028-4c59-9a00-045874f411aa)
+ ![pc2 ping fail](https://github.com/user-attachments/assets/e51c969c-79b6-4fa2-a1f6-69fb299e5938)
+
+ ![fix 2](https://github.com/user-attachments/assets/ba9cb48b-4e5d-4f64-ad1f-144ea00ef523)
+
 
 To simulate an unauthorized device connecting to the network, we unplugged the authorized device from Fa0/1 and connected PC2 (the attacker) in its place. Since PC2's MAC address didn't match the one learned by the switch, the violation was triggered. The switch responded by blocking the traffic and incrementing the violation count, demonstrating how port security can prevent rogue devices from gaining access.
 
